@@ -1,8 +1,24 @@
-# React + Vite
+#Redux-ToDoList
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application is built using React, Redux, Redux Toolkit and Tailwind CSS.
 
-Currently, two official plugins are available:
+This application uses basic concepts of HTML, CSS, state management libraries of React, and State management libraries of Redux Toolkit.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features
+Add a Task to the list ✅
+Editing the task 🌟
+Once completed the task will be marked 🚩
+Delete the task ⚛️
+Run Locally
+Clone the project
+
+  git clone https://github.com/Arun0073/Redux-TodoList
+Go to the project directory
+
+  cd my-project
+Install dependencies
+
+  npm install
+Start the server
+
+  npm run dev
