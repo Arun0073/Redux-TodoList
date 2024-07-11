@@ -169,9 +169,9 @@ const ToDoList = () => {
             </div>
           </>
         ) : (
-          <div className="container mx-auto mmt-6">
+          <div className="container mx-auto mt-6">
             <div className="flex justify-center mb-6">
-              <select onChange={(e) => handleSort(e.target.value)}>
+              <select className="bg-slate-300 rounded-md" onChange={(e) => handleSort(e.target.value)}>
                 <option className="text-sm" value="All">
                   All
                 </option>
@@ -197,7 +197,7 @@ const ToDoList = () => {
                       todo.completed
                         ? "line-through text-greenTeal"
                         : "text-sunsetOrange"
-                    }`}
+                    }`} style={{cursor:"pointer"}}
                   >
                     {todo.task}
                   </div>
