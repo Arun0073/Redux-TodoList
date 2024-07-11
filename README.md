@@ -39,3 +39,9 @@ Start the server
   npm run dev
 ```
 
+Build the Project(for deployment)
+
+```bash
+  npm build
+```
+
