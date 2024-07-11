@@ -6,31 +6,40 @@ import {
   sortTodo,
   updateTodo,
   toggleCompleted,
-} from "../ToDoSlice";
+} from "../ToDoSlice"; // Importing specific actions from the ToDoSlice file to manipulate todo items
 import { TiPencil } from "react-icons/ti";
 import { BsTrash } from "react-icons/bs";
 import todoImg from "../assets/todo.png";
 
+//Defining ToDoList components
 const ToDoList = () => {
   const dispatch = useDispatch();
-  const todoList = useSelector((state) => state.todo.todoList);
-  const sortCriteria = useSelector((state) => state.todo.sortCriteria);
+  const todoList = useSelector((state) => state.todo.todoList);// Accessing the todoList from the Redux store
+  const sortCriteria = useSelector((state) => state.todo.sortCriteria); // Accessing the sortCriteria from the Redux store
 
+    // State for controlling the visibility of the modal dialog
   const [showModal, setShowModal] = useState(false);
+    // State for tracking the current todo item being edited
   const [currentTodo, setCurrentTodo] = useState(null);
+    // State for the new task description input
   const [newTask, setNewTask] = useState("");
 
+    // Effect hook to persist todoList to localStorage whenever it changes
   useEffect(() => {
     if (todoList.length > 0) {
       localStorage.setItem("todolist", JSON.stringify(todoList));
     }
   }, [todoList]);
+
+    // Effect hook to load the todoList from localStorage on component mount
   useEffect(() => {
     const localToDoList = JSON.parse(localStorage.getItem("todolist"));
     if (localToDoList) {
       dispatch(setTodoList(localToDoList));
     }
   }, []);
+
+    // Function to add a new todo item
 
   const handleAddTodo = (task) => {
     if (task.trim().length === 0) {
@@ -47,12 +56,14 @@ const ToDoList = () => {
     }
   };
 
+    // Function to delete a todo item
   const handleDelTodo = (id) => {
     const updateTodo = todoList.filter((todo) => todo.id !== id);
     dispatch(setTodoList(updateTodo));
     localStorage.setItem("todolist", JSON.stringify(updateTodo));
   };
 
+    // Function to update of todo items.
   const handleUpdateTodo = (id, task) => {
     if (task.trim().length === 0) {
       alert("Please enter a task");
@@ -66,19 +77,25 @@ const ToDoList = () => {
       setShowModal(false);
     }
   };
+
+    // Function to handle sorting of todo items based on the selected criteria
   const handleSort = (sortCriteria) => {
     dispatch(sortTodo(sortCriteria));
   };
 
+    // Function to toggle the completion status of a todo item
   const handleToggleCompleted = (id) => {
     dispatch(toggleCompleted({ id }));
   };
+
   const sortToDoList = todoList.filter((todo) => {
     if (sortCriteria === "All") return true;
     if (sortCriteria === "Completed" && todo.completed) return true;
     if (sortCriteria === "Not Completed" && !todo.completed) return true;
     return false;
   });
+
+
   return (
     <div>
       {showModal && (
@@ -88,7 +105,7 @@ const ToDoList = () => {
               type="text"
               className="border p-2 rounded-md outline-none mb-8 w-full"
               value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
+              onChange={(e) => setNewTask(e.target.value)} //input value is set to newTask
               placeholder={
                 currentTodo ? "Update Your Task Here" : "Enter Your Task Here"
               }
@@ -99,7 +116,7 @@ const ToDoList = () => {
                   <button
                     onClick={() => {
                       setShowModal(false);
-                      handleUpdateTodo(currentTodo.id, newTask);
+                      handleUpdateTodo(currentTodo.id, newTask); //updating the todo item
                     }}
                     className="bg-sunsetOrange rounded-md text-white py-3 px-10"
                   >
@@ -120,7 +137,7 @@ const ToDoList = () => {
                     className="bg-sunsetOrange rounded-md text-white py-3 px-10"
                     onClick={() => {
                       setShowModal(false);
-                      handleAddTodo(newTask);
+                      handleAddTodo(newTask); //Adding new item to todo list.
                     }}
                   >
                     Save
@@ -140,7 +157,7 @@ const ToDoList = () => {
         </div>
       )}
       <div className="flex items-center justify-center flex-col">
-        {todoList.length === 0 ? (
+        {todoList.length === 0 ? ( //checking if todoList is empty if so display image otherwise display todolist
           <>
             <div className="mb-8">
               <div className="sm:w-[500px] sm:h-[500px] min-w-[250px]">
@@ -167,14 +184,14 @@ const ToDoList = () => {
               </select>
             </div>
             <div>
-              {sortToDoList.map((todo) => (
+              {sortToDoList.map((todo) => ( //mapping through the todolist by the values given by user
                 <div
                   key={todo.id}
                   className="flex flex-row items-center justify-between mb-6 bg-Tangarao mx-auto w-full md:w-[75%] rounded-md p-4 "
                 >
                   <div
                     onClick={() => {
-                      handleToggleCompleted(todo.id);
+                      handleToggleCompleted(todo.id); //toggling the completion status of the todo item
                     }}
                     className={`${
                       todo.completed
@@ -189,8 +206,8 @@ const ToDoList = () => {
                       className="bg-blue-500 text-white p-1 rounded-md ml-2 "
                       onClick={() => {
                         setShowModal(true);
-                        setCurrentTodo(todo);
-                        setNewTask(todo.task);
+                        setCurrentTodo(todo); //updating the todo item
+                        setNewTask(todo.task); //setting new updated task
                       }}
                     >
                       <TiPencil />
